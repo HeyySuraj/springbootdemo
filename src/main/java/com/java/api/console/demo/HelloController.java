@@ -13,18 +13,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-
 @RestController
 public class HelloController {
     @GetMapping("/")
-     public String hello() {
+    public String hello() {
         return "Hello Java";
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveUserData(@RequestHeader Map<String, String> headers,@RequestBody String entity) {
+    public ResponseEntity<String> saveUserData(@RequestHeader Map<String, String> headers, @RequestBody String entity) {
         try {
-            
+
             System.out.println(entity);
 
             Map<String, Object> response = new HashMap<>();
@@ -32,17 +31,17 @@ public class HelloController {
             response.put("status", 401);
 
             // if (!"API_KEY".equals(headers.get("x-api-key"))) {
-            //     response.put("message", "Unauthorized");
-            //     response.put("status", HttpStatus.UNAUTHORIZED.value());
-            //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            // response.put("message", "Unauthorized");
+            // response.put("status", HttpStatus.UNAUTHORIZED.value());
+            // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             // }
-            
+
             return ResponseEntity.ok(entity);
         } catch (Exception e) {
             e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                             .body("Error processing request: " + e.getMessage());
-        };
-        //TODO: process POST request
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error processing request: " + e.getMessage());
+        }
+        // TODO: process POST request
     }
 }
