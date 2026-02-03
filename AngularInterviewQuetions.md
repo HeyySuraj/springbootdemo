@@ -1093,3 +1093,203 @@ this.getUsers().subscribe(users => console.log(users));
 ----
 
 
+
+# What is RxJS in Angular?
+
+**RxJS (Reactive Extensions for JavaScript)** is a **library for reactive programming** that provides **Observables and operators** to handle **asynchronous and event-based data streams** in Angular.
+
+> Angular uses RxJS to manage async operations like HTTP calls, user events, and real-time data.
+
+---
+
+## Why RxJS is used in Angular
+
+* Handle async data streams
+* Compose complex async logic cleanly
+* Cancel and retry requests
+* Transform data using operators
+* Works seamlessly with `async` pipe
+
+---
+
+## Simple Example
+
+```ts
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+of(2, 4, 6)
+  .pipe(map(x => x * 2))
+  .subscribe(console.log);
+```
+
+### Output
+
+```
+4, 8, 12
+```
+
+---
+
+## Common RxJS Operators
+
+* `map` – transform data
+* `filter` – filter values
+* `switchMap` – switch streams (HTTP calls)
+* `mergeMap` – parallel streams
+* `debounceTime` – delay emissions
+* `catchError` – handle errors
+
+---
+
+## RxJS in Angular (Real Use)
+
+```ts
+this.http.get('/api/users')
+  .pipe(
+    map(res => res.data),
+    catchError(err => of([]))
+  );
+```
+
+---
+
+## RxJS vs Normal Callbacks
+
+| RxJS         | Callbacks      |
+| ------------ | -------------- |
+| Declarative  | Imperative     |
+| Cancelable   | Hard to cancel |
+| Composable   | Hard to manage |
+| Stream-based | One-time       |
+
+---
+
+## One-line Interview Summary 🎯
+
+> **RxJS is a reactive programming library used in Angular to work with Observables and operators for handling asynchronous and event-based data streams efficiently.**
+
+----
+
+
+## What is AOT in Angular?
+
+**AOT (Ahead-of-Time compilation)** is an Angular process where **HTML templates and TypeScript code are compiled into efficient JavaScript at build time**, **before the application runs in the browser**.
+
+> Angular compiles the app **before deployment**, not in the browser.
+
+---
+
+## Why AOT is used
+
+* Faster app startup 🚀
+* Smaller bundle size
+* Better performance
+* Detects template errors at build time
+* More secure (no template compilation in browser)
+
+---
+
+## AOT vs JIT
+
+| AOT                   | JIT                  |
+| --------------------- | -------------------- |
+| Compile at build time | Compile in browser   |
+| Faster load           | Slower startup       |
+| Errors caught early   | Errors at runtime    |
+| Production-ready      | Development-friendly |
+
+---
+
+## Example
+
+```bash
+ng build --aot
+```
+
+(Enabled by default in production builds)
+
+---
+
+## One-line Interview Summary 🎯
+
+> **AOT in Angular compiles templates and TypeScript code at build time, resulting in faster, smaller, and more secure applications.**
+
+
+
+---
+
+# What is the `Subscription` class in RxJS?
+
+The **`Subscription`** class represents an **active execution of an Observable**.
+It allows you to **manage and cancel (unsubscribe from) an Observable stream**.
+
+> A Subscription is what you get when you subscribe to an Observable.
+
+---
+
+## Simple Example
+
+```ts
+const sub = observable$.subscribe(value => {
+  console.log(value);
+});
+```
+
+```ts
+sub.unsubscribe();
+```
+
+---
+
+## Why Subscription is important
+
+* Stops receiving values
+* Cancels ongoing work (like HTTP, timers)
+* Prevents memory leaks
+* Controls observable lifecycle
+
+---
+
+## Real Angular Example
+
+```ts
+subscription!: Subscription;
+
+ngOnInit() {
+  this.subscription = this.service.getData().subscribe();
+}
+
+ngOnDestroy() {
+  this.subscription.unsubscribe();
+}
+```
+
+---
+
+## Multiple Subscriptions
+
+```ts
+const sub = new Subscription();
+
+sub.add(obs1.subscribe());
+sub.add(obs2.subscribe());
+
+sub.unsubscribe(); // cancels all
+```
+
+---
+
+## Subscription vs async pipe
+
+| Subscription       | async pipe        |
+| ------------------ | ----------------- |
+| Manual unsubscribe | Auto unsubscribe  |
+| More control       | Cleaner templates |
+| Used in TS         | Used in HTML      |
+
+---
+
+## One-line Interview Summary 🎯
+
+> **The Subscription class in RxJS represents an active Observable execution and provides the ability to cancel it using `unsubscribe()`.**
